@@ -1,99 +1,174 @@
-/* Reset defaults */
+/* --- Variables & Configuration --- */
+:root {
+  /* Vibrant Background */
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  
+  /* Glass Board */
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  
+  /* Cell States */
+  --cell-size: 50px;
+  --cell-gap: 8px;
+  --cell-bg-hidden: #f0f2f5;
+  --cell-bg-revealed: #e4e6eb;
+  --shadow-light: rgba(255, 255, 255, 0.8);
+  --shadow-dark: rgba(0, 0, 0, 0.15);
+  
+  /* Number Colors (High Contrast) */
+  --c1: #3b82f6; --c2: #10b981; --c3: #ef4444; --c4: #8b5cf6;
+  --c5: #f59e0b; --c6: #06b6d4; --c7: #111827; --c8: #6b7280;
+}
+
+/* --- Reset & Base --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    user-select: none; /* Prevents text selection while clicking fast */
 }
 
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     min-height: 100vh;
-    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
-    padding: 40px 20px;
+    background: var(--bg-gradient);
+    padding: 20px;
 }
 
-/* Title styling */
+/* --- Typography --- */
 h1 {
     color: #fff;
-    margin-bottom: 30px;
-    font-size: 2rem;
-    text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+    letter-spacing: 1px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* Grid container */
+/* --- The Game Board (Glassmorphism) --- */
 #grille {
     display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
-    gap: 6px;
-    padding: 15px;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.15);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
+    /* Uses variables for size - easier to change later */
+    grid-template-columns: repeat(10, var(--cell-size));
+    grid-template-rows: repeat(10, var(--cell-size));
+    gap: var(--cell-gap);
+    
+    padding: 20px;
+    border-radius: 20px;
+    
+    /* The Glass Effect */
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-/* Cells (buttons) */
+/* --- The Cells --- */
 button {
-    width: 50px;
-    height: 50px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     border: none;
-    border-radius: 8px;
+    border-radius: 8px; /* Slightly softer corners */
     cursor: pointer;
-    font-weight: bold;
-    font-size: 20px;
-    transition: all 0.2s ease-in-out;
-    background: linear-gradient(145deg, #e0e0e0, #ffffff);
-    box-shadow: 4px 4px 10px #c5c5c5, -4px -4px 10px #ffffff;
+    
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: transparent; /* Hides text until revealed */
+    
+    /* 3D "Raised" Look */
+    background: var(--cell-bg-hidden);
+    box-shadow: 
+        inset 2px 2px 0px rgba(255,255,255, 0.5),
+        inset -2px -2px 0px rgba(0,0,0, 0.05),
+        4px 4px 8px rgba(0,0,0,0.1);
+    
+    transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
 }
 
+/* Hover Effect (Lift up) */
 button:hover:not(:disabled) {
-    transform: scale(1.1);
-    box-shadow: inset 2px 2px 5px #c5c5c5, inset -2px -2px 5px #ffffff;
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+    box-shadow: 
+        inset 2px 2px 0px rgba(255,255,255, 0.5),
+        inset -2px -2px 0px rgba(0,0,0, 0.05),
+        6px 6px 12px rgba(0,0,0,0.15);
 }
 
-button:disabled {
-    cursor: default;
-    background: #ddd;
+/* Active Click (Press down) */
+button:active:not(:disabled) {
+    transform: translateY(1px);
     box-shadow: none;
 }
 
-/* Numbers styling */
-.case1 { color: #2ecc71; }      /* green */
-.case2 { color: #3498db; }      /* blue */
-.case3 { color: #9b59b6; }      /* purple */
-.case4 { color: #e67e22; }      /* orange */
-.case5 { color: #e74c3c; }      /* red */
-.case6 { color: #c0392b; }      /* dark red */
-.case7 { color: #8e44ad; }      /* dark purple */
-.case8 { color: #34495e; }      /* navy */
-
-button i {
-    color: #e74c3c;
-    font-size: 22px;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+/* --- Revealed/Disabled Cells --- */
+button:disabled {
+    cursor: default;
+    background: var(--cell-bg-revealed);
+    color: inherit; /* Reveals the number color */
+    
+    /* "Sunken" Look */
+    box-shadow: 
+        inset 3px 3px 6px rgba(0,0,0,0.1),
+        inset -2px -2px 4px rgba(255,255,255,0.7);
+    transform: none;
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* Responsive adjustments */
+/* --- Game Elements (Mines & Flags) --- */
+/* Add class .mine to your buttons in JS when game ends */
+button.mine {
+    background: #ef4444;
+    color: white !important;
+    animation: shake 0.4s ease-in-out;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* Add class .flag to buttons on right click */
+button.flag {
+    color: #e74c3c !important; /* Make icon visible */
+    font-size: 1.1rem;
+}
+
+/* --- Number Colors --- */
+.case1 { color: var(--c1); }
+.case2 { color: var(--c2); }
+.case3 { color: var(--c3); }
+.case4 { color: var(--c4); }
+.case5 { color: var(--c5); }
+.case6 { color: var(--c6); }
+.case7 { color: var(--c7); }
+.case8 { color: var(--c8); }
+
+/* --- Icons --- */
+button i {
+    pointer-events: none; /* Ensures click passes through icon to button */
+}
+
+/* --- Animations --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-3px); }
+    75% { transform: translateX(3px); }
+}
+
+/* --- Responsive Design --- */
 @media (max-width: 600px) {
-    #grille {
-        grid-template-columns: repeat(10, 35px);
-        grid-template-rows: repeat(10, 35px);
-        gap: 4px;
-        padding: 10px;
+    :root {
+        --cell-size: 32px; /* Smaller cells on mobile */
+        --cell-gap: 4px;
     }
     
-    button {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
+    #grille {
+        padding: 10px;
+        gap: var(--cell-gap);
     }
 
-    button i {
-        font-size: 18px;
+    button {
+        font-size: 1rem;
     }
 }
