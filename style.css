@@ -1,0 +1,40 @@
+#grille{
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+button{
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+}
+
+.case1{
+    color: green;
+}
+
+.case2{
+    color: blue;
+}
+
+.case3{
+    color: blueviolet;
+}
+
+.case4{
+    color: orange;
+}
+
+.case5{
+    color: orangered
+}
+
+.case6{
+    color: darkred
+}
+
+.case7{
+    color: purple
+}
