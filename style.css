@@ -1,13 +1,7 @@
-/* --- Variables & Configuration --- */
 :root {
-  /* Vibrant Background */
   --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  
-  /* Glass Board */
   --glass-bg: rgba(255, 255, 255, 0.15);
   --glass-border: rgba(255, 255, 255, 0.3);
-  
-  /* Cell States */
   --cell-size: 50px;
   --cell-gap: 8px;
   --cell-bg-hidden: #f0f2f5;
@@ -15,18 +9,16 @@
   --shadow-light: rgba(255, 255, 255, 0.8);
   --shadow-dark: rgba(0, 0, 0, 0.15);
   
-  /* Number Colors (High Contrast) */
   --c1: #3b82f6; --c2: #10b981; --c3: #ef4444; --c4: #8b5cf6;
   --c5: #f59e0b; --c6: #06b6d4; --c7: #111827; --c8: #6b7280;
 }
 
-/* --- Reset & Base --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    user-select: none; /* Prevents text selection while clicking fast */
+    user-select: none;
 }
 
 body {
@@ -39,7 +31,6 @@ body {
     padding: 20px;
 }
 
-/* --- Typography --- */
 h1 {
     color: #fff;
     margin-bottom: 25px;
@@ -48,18 +39,13 @@ h1 {
     text-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* --- The Game Board (Glassmorphism) --- */
 #grille {
     display: grid;
-    /* Uses variables for size - easier to change later */
     grid-template-columns: repeat(10, var(--cell-size));
     grid-template-rows: repeat(10, var(--cell-size));
     gap: var(--cell-gap);
-    
     padding: 20px;
     border-radius: 20px;
-    
-    /* The Glass Effect */
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -67,19 +53,17 @@ h1 {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
-/* --- The Cells --- */
 button {
     width: var(--cell-size);
     height: var(--cell-size);
     border: none;
-    border-radius: 8px; /* Slightly softer corners */
+    border-radius: 8px;
     cursor: pointer;
     
     font-weight: 800;
     font-size: 1.2rem;
-    color: transparent; /* Hides text until revealed */
+    color: transparent;
     
-    /* 3D "Raised" Look */
     background: var(--cell-bg-hidden);
     box-shadow: 
         inset 2px 2px 0px rgba(255,255,255, 0.5),
@@ -89,7 +73,6 @@ button {
     transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
 }
 
-/* Hover Effect (Lift up) */
 button:hover:not(:disabled) {
     transform: translateY(-2px);
     filter: brightness(1.05);
@@ -99,19 +82,16 @@ button:hover:not(:disabled) {
         6px 6px 12px rgba(0,0,0,0.15);
 }
 
-/* Active Click (Press down) */
 button:active:not(:disabled) {
     transform: translateY(1px);
     box-shadow: none;
 }
 
-/* --- Revealed/Disabled Cells --- */
 button:disabled {
     cursor: default;
     background: var(--cell-bg-revealed);
-    color: inherit; /* Reveals the number color */
+    color: inherit; 
     
-    /* "Sunken" Look */
     box-shadow: 
         inset 3px 3px 6px rgba(0,0,0,0.1),
         inset -2px -2px 4px rgba(255,255,255,0.7);
@@ -119,8 +99,6 @@ button:disabled {
     border: 1px solid rgba(0,0,0,0.05);
 }
 
-/* --- Game Elements (Mines & Flags) --- */
-/* Add class .mine to your buttons in JS when game ends */
 button.mine {
     background: #ef4444;
     color: white !important;
@@ -128,13 +106,12 @@ button.mine {
     box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* Add class .flag to buttons on right click */
+
 button.flag {
-    color: #e74c3c !important; /* Make icon visible */
+    color: #e74c3c !important; 
     font-size: 1.1rem;
 }
 
-/* --- Number Colors --- */
 .case1 { color: var(--c1); }
 .case2 { color: var(--c2); }
 .case3 { color: var(--c3); }
@@ -144,22 +121,19 @@ button.flag {
 .case7 { color: var(--c7); }
 .case8 { color: var(--c8); }
 
-/* --- Icons --- */
 button i {
-    pointer-events: none; /* Ensures click passes through icon to button */
+    pointer-events: none; 
 }
 
-/* --- Animations --- */
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-3px); }
     75% { transform: translateX(3px); }
 }
 
-/* --- Responsive Design --- */
 @media (max-width: 600px) {
     :root {
-        --cell-size: 32px; /* Smaller cells on mobile */
+        --cell-size: 32px; 
         --cell-gap: 4px;
     }
     
