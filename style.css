@@ -1,40 +1,93 @@
-#grille{
-    width: 400px;
-    height: 400px;
-    display: flex;
-    flex-wrap: wrap;
+/* Reset some defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-button{
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: #f5f5f5;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Grid container */
+#grille {
+    display: grid;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
+    gap: 4px;
+    background: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Buttons (cells) */
+button {
     width: 40px;
     height: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
     font-weight: bold;
+    font-size: 18px;
+    background: #eee;
+    border-radius: 5px;
+    transition: all 0.2s ease;
 }
 
-.case1{
-    color: green;
+button:hover:not(:disabled) {
+    background: #ddd;
+    transform: scale(1.05);
 }
 
-.case2{
-    color: blue;
+button:disabled {
+    cursor: default;
+    background: #ccc;
 }
 
-.case3{
-    color: blueviolet;
+/* Numbered cells */
+.case1 { color: green; }
+.case2 { color: blue; }
+.case3 { color: blueviolet; }
+.case4 { color: orange; }
+.case5 { color: orangered; }
+.case6 { color: darkred; }
+.case7 { color: purple; }
+
+/* Mines icon */
+button i {
+    color: red;
+    font-size: 20px;
 }
 
-.case4{
-    color: orange;
-}
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    #grille {
+        grid-template-columns: repeat(10, 30px);
+        grid-template-rows: repeat(10, 30px);
+        gap: 3px;
+        padding: 5px;
+    }
+    
+    button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
 
-.case5{
-    color: orangered
-}
-
-.case6{
-    color: darkred
-}
-
-.case7{
-    color: purple
+    button i {
+        font-size: 16px;
+    }
 }
