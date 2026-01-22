@@ -1,9 +1,9 @@
-/* Reset some defaults */
+/* Reset defaults */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -12,82 +12,88 @@ body {
     align-items: center;
     justify-content: flex-start;
     min-height: 100vh;
-    background: #f5f5f5;
-    padding: 20px;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    padding: 40px 20px;
 }
 
+/* Title styling */
 h1 {
-    margin-bottom: 20px;
-    color: #333;
+    color: #fff;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.3);
 }
 
 /* Grid container */
 #grille {
     display: grid;
-    grid-template-columns: repeat(10, 40px);
-    grid-template-rows: repeat(10, 40px);
-    gap: 4px;
-    background: #ddd;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    grid-template-columns: repeat(10, 50px);
+    grid-template-rows: repeat(10, 50px);
+    gap: 6px;
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
 }
 
-/* Buttons (cells) */
+/* Cells (buttons) */
 button {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border: none;
-    outline: none;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 18px;
-    background: #eee;
-    border-radius: 5px;
-    transition: all 0.2s ease;
+    font-size: 20px;
+    transition: all 0.2s ease-in-out;
+    background: linear-gradient(145deg, #e0e0e0, #ffffff);
+    box-shadow: 4px 4px 10px #c5c5c5, -4px -4px 10px #ffffff;
 }
 
 button:hover:not(:disabled) {
-    background: #ddd;
-    transform: scale(1.05);
+    transform: scale(1.1);
+    box-shadow: inset 2px 2px 5px #c5c5c5, inset -2px -2px 5px #ffffff;
 }
 
 button:disabled {
     cursor: default;
-    background: #ccc;
+    background: #ddd;
+    box-shadow: none;
 }
 
-/* Numbered cells */
-.case1 { color: green; }
-.case2 { color: blue; }
-.case3 { color: blueviolet; }
-.case4 { color: orange; }
-.case5 { color: orangered; }
-.case6 { color: darkred; }
-.case7 { color: purple; }
+/* Numbers styling */
+.case1 { color: #2ecc71; }      /* green */
+.case2 { color: #3498db; }      /* blue */
+.case3 { color: #9b59b6; }      /* purple */
+.case4 { color: #e67e22; }      /* orange */
+.case5 { color: #e74c3c; }      /* red */
+.case6 { color: #c0392b; }      /* dark red */
+.case7 { color: #8e44ad; }      /* dark purple */
+.case8 { color: #34495e; }      /* navy */
 
-/* Mines icon */
 button i {
-    color: red;
-    font-size: 20px;
+    color: #e74c3c;
+    font-size: 22px;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }
 
 /* Responsive adjustments */
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     #grille {
-        grid-template-columns: repeat(10, 30px);
-        grid-template-rows: repeat(10, 30px);
-        gap: 3px;
-        padding: 5px;
+        grid-template-columns: repeat(10, 35px);
+        grid-template-rows: repeat(10, 35px);
+        gap: 4px;
+        padding: 10px;
     }
     
     button {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
     }
 
     button i {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
